@@ -1,60 +1,110 @@
 import re
 import string
+import ssl
 import nltk
+
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+from sklearn.exceptions import NotFittedError
 
-# Download required NLTK resources if missing
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt")
+# ---------------------------------------------------
+# SSL Fix (for Streamlit Cloud)
+# ---------------------------------------------------
 
 try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords")
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+# ---------------------------------------------------
+# Download required NLTK resources
+# ---------------------------------------------------
+
+RESOURCES = {
+    "tokenizers/punkt": "punkt",
+    "tokenizers/punkt_tab": "punkt_tab",
+    "corpora/stopwords": "stopwords",
+}
+
+for resource_path, resource_name in RESOURCES.items():
+    try:
+        nltk.data.find(resource_path)
+    except LookupError:
+        nltk.download(resource_name, quiet=True)
+
+# ---------------------------------------------------
+# Stemmer
+# ---------------------------------------------------
 
 ps = PorterStemmer()
 
-# Common spam keywords
+# ---------------------------------------------------
+# Common Spam Keywords
+# ---------------------------------------------------
+
 SPAM_KEYWORDS = {
-    "free", "win", "winner", "won", "cash", "claim", "click", "offer",
-    "urgent", "limited", "prize", "reward", "gift", "bonus", "money",
-    "credit", "loan", "guarantee", "congratulations", "selected",
-    "call", "subscribe", "exclusive", "discount"
+    "free",
+    "win",
+    "winner",
+    "won",
+    "cash",
+    "claim",
+    "click",
+    "offer",
+    "urgent",
+    "limited",
+    "prize",
+    "reward",
+    "gift",
+    "bonus",
+    "money",
+    "credit",
+    "loan",
+    "guarantee",
+    "congratulations",
+    "selected",
+    "call",
+    "subscribe",
+    "exclusive",
+    "discount",
 }
 
+# ---------------------------------------------------
+# Text Preprocessing
+# ---------------------------------------------------
 
 def transform_text(text):
     """
     Preprocess text exactly like the training notebook.
     """
+
     text = text.lower()
 
-    tokens = nltk.word_tokenize(text)
+    words = nltk.word_tokenize(text)
 
     filtered = []
 
-    for word in tokens:
+    for word in words:
         if word.isalnum():
             filtered.append(word)
 
-    tokens = []
-
     stop_words = set(stopwords.words("english"))
 
+    final_words = []
+
     for word in filtered:
-        if word not in stop_words and word not in string.punctuation:
-            tokens.append(ps.stem(word))
+        if word not in stop_words:
+            final_words.append(ps.stem(word))
 
-    return " ".join(tokens)
+    return " ".join(final_words)
 
+# ---------------------------------------------------
+# Message Statistics
+# ---------------------------------------------------
 
 def get_statistics(text):
-    """
-    Return message statistics.
-    """
 
     words = text.split()
 
@@ -68,18 +118,19 @@ def get_statistics(text):
         "Characters": len(text),
         "Words": len(words),
         "Sentences": len(sentences),
-        "Special Characters": special
+        "Special Characters": special,
     }
 
+# ---------------------------------------------------
+# Spam Keywords
+# ---------------------------------------------------
 
 def detect_spam_keywords(text):
-    """
-    Detect suspicious words inside the message.
-    """
 
     found = []
 
     for word in text.lower().split():
+
         word = re.sub(r"[^a-zA-Z]", "", word)
 
         if word in SPAM_KEYWORDS and word not in found:
@@ -87,25 +138,21 @@ def detect_spam_keywords(text):
 
     return found
 
-
-from sklearn.exceptions import NotFittedError
+# ---------------------------------------------------
+# Confidence
+# ---------------------------------------------------
 
 def get_confidence(model, vector):
-    """
-    Returns:
-        prediction
-        confidence
-        probabilities
-    """
 
     try:
-        probs = model.predict_proba(vector)[0]
 
-        prediction = probs.argmax()
+        probabilities = model.predict_proba(vector)[0]
 
-        confidence = round(max(probs) * 100, 2)
+        prediction = probabilities.argmax()
 
-        return prediction, confidence, probs
+        confidence = round(max(probabilities) * 100, 2)
+
+        return prediction, confidence, probabilities
 
     except NotFittedError:
 
