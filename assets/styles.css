@@ -1,0 +1,429 @@
+/* ============================
+   SpamShield AI Theme
+   Author : Hemant Narute
+============================= */
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+html,
+body,
+[class*="css"] {
+    font-family: "Poppins", sans-serif;
+}
+
+/* Main App */
+.stApp{
+    background:#F4F7FB;
+}
+
+/* Remove Streamlit Menu */
+#MainMenu{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
+}
+
+header{
+    visibility:hidden;
+}
+
+/* ==========================
+SIDEBAR
+========================== */
+
+section[data-testid="stSidebar"]{
+    background:#111827;
+    color:white;
+    border-right:1px solid #1F2937;
+}
+
+section[data-testid="stSidebar"] *{
+    color:white;
+}
+
+/* ==========================
+TITLE
+========================== */
+
+.main-title{
+    text-align:center;
+    font-size:42px;
+    font-weight:800;
+    color:#2563EB;
+    margin-bottom:0px;
+}
+
+.sub-title{
+    text-align:center;
+    color:#6B7280;
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+/* ==========================
+Hero Card
+========================== */
+
+.hero-card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0px 8px 25px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+/* ==========================
+Metric Cards
+========================== */
+
+.metric-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    text-align:center;
+
+    box-shadow:0px 6px 18px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.metric-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0px 12px 28px rgba(0,0,0,.15);
+
+}
+
+.metric-title{
+
+    color:#6B7280;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.metric-value{
+
+    color:#2563EB;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-top:10px;
+
+}
+
+/* ==========================
+Prediction Cards
+========================== */
+
+.success-card{
+
+    background:#ECFDF5;
+
+    border-left:8px solid #10B981;
+
+    padding:25px;
+
+    border-radius:16px;
+
+    box-shadow:0px 5px 18px rgba(0,0,0,.08);
+
+}
+
+.success-title{
+
+    color:#047857;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+.success-text{
+
+    color:#065F46;
+
+    font-size:18px;
+
+}
+
+/* Spam */
+
+.error-card{
+
+    background:#FEF2F2;
+
+    border-left:8px solid #EF4444;
+
+    padding:25px;
+
+    border-radius:16px;
+
+    box-shadow:0px 5px 18px rgba(0,0,0,.08);
+
+}
+
+.error-title{
+
+    color:#DC2626;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+.error-text{
+
+    color:#991B1B;
+
+    font-size:18px;
+
+}
+
+/* ==========================
+Buttons
+========================== */
+
+.stButton>button{
+
+    width:100%;
+
+    background:linear-gradient(90deg,#2563EB,#3B82F6);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    transition:.3s;
+
+}
+
+.stButton>button:hover{
+
+    transform:scale(1.02);
+
+    background:linear-gradient(90deg,#1D4ED8,#2563EB);
+
+}
+
+/* ==========================
+Textarea
+========================== */
+
+textarea{
+
+    border-radius:15px !important;
+
+    border:2px solid #CBD5E1 !important;
+
+    font-size:17px !important;
+
+}
+
+textarea:focus{
+
+    border:2px solid #2563EB !important;
+
+    box-shadow:0px 0px 10px rgba(37,99,235,.2);
+
+}
+
+/* ==========================
+Statistics Container
+========================== */
+
+.stats-box{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0px 5px 18px rgba(0,0,0,.08);
+
+}
+
+/* ==========================
+Keyword Tags
+========================== */
+
+.keyword{
+
+    display:inline-block;
+
+    background:#DBEAFE;
+
+    color:#1E3A8A;
+
+    padding:8px 16px;
+
+    margin:5px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+Prediction History
+========================== */
+
+.history-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-top:10px;
+
+    box-shadow:0px 5px 18px rgba(0,0,0,.08);
+
+}
+
+/* ==========================
+Progress Bar
+========================== */
+
+.stProgress>div>div{
+
+    background:#2563EB;
+
+}
+
+/* ==========================
+DataFrame
+========================== */
+
+[data-testid="stDataFrame"]{
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+/* ==========================
+Expander
+========================== */
+
+.streamlit-expanderHeader{
+
+    font-size:18px;
+
+    font-weight:600;
+
+}
+
+/* ==========================
+Divider
+========================== */
+
+hr{
+
+    border:none;
+
+    height:1px;
+
+    background:#E5E7EB;
+
+}
+
+/* ==========================
+Footer
+========================== */
+
+.footer{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:#6B7280;
+
+    font-size:14px;
+
+}
+
+/* ==========================
+Scrollbar
+========================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#3B82F6;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#F1F5F9;
+
+}
+
+/* ==========================
+Responsive
+========================== */
+
+@media(max-width:768px){
+
+.main-title{
+
+font-size:30px;
+
+}
+
+.metric-value{
+
+font-size:24px;
+
+}
+
+.success-title{
+
+font-size:24px;
+
+}
+
+.error-title{
+
+font-size:24px;
+
+}
+
+}
